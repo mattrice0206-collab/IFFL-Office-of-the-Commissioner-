@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Commissioner Portal Login</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<section class="hero">
+
+<div class="container">
+
+<img src="images/commissioner-seal.png" class="seal">
+
+<p class="subtitle">Restricted Access</p>
+
+<h1>Commissioner Portal</h1>
+
+<p>
+
+Authorized personnel only.
+
+</p>
+
+</div>
+
+</section>
+
+<main>
+
+<div class="container">
+
+<div class="office-mission" style="max-width:500px;margin:auto;">
+
+<h2>Sign In</h2>
+
+<form id="loginForm">
+
+<label>Password</label>
+
+<br><br>
+
+<input
+type="password"
+id="password"
+placeholder="Enter Commissioner Password"
+style="width:100%;padding:14px;font-size:16px;">
+
+<br><br>
+
+<button
+type="submit"
+class="button"
+style="width:100%;">
+
+Access Portal
+
+</button>
+
+</form>
+
+<p
+id="error"
+style="color:red;margin-top:20px;display:none;">
+
+Incorrect password.
+
+</p>
+
+</div>
+
+</div>
+
+</main>
+
+<script>
+
+const PASSWORD="IFFL2026";
+
+document.getElementById("loginForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const pass=document.getElementById("password").value;
+
+if(pass===PASSWORD){
+
+window.location.href="commissioner/index.html";
+
+}else{
+
+document.getElementById("error").style.display="block";
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>
