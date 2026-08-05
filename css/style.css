@@ -514,5 +514,43 @@ footer p{
     transform:translateY(0);
 
 }
-   
+
+.document-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:20px;
+
+background:white;
+
+box-shadow:0 6px 16px rgba(0,0,0,.06);
+
+}
+
+.document-table th{
+
+background:#0B2343;
+
+color:white;
+
+padding:16px;
+
+text-align:left;
+
+}
+
+.document-table td{
+
+padding:16px;
+
+border-bottom:1px solid #ddd;
+
+}
+
+.document-table tr:hover{
+
+background:#f4f7fa;
+
 }
