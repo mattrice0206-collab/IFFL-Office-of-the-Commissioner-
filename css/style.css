@@ -493,4 +493,26 @@ footer p{
 
 }
 
+/* ==========================================
+   Animations
+========================================== */
+
+.hidden{
+
+    opacity:0;
+
+    transform:translateY(25px);
+
+    transition:all .6s ease;
+
+}
+
+.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+   
 }
