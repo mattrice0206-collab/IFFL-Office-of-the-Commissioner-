@@ -408,3 +408,223 @@ Open
 </div>
 
 </div>
+
+  <div class="office-mission">
+
+<div class="section-title">
+
+<h2>
+
+System Status
+
+</h2>
+
+</div>
+
+<table class="document-table">
+
+<thead>
+
+<tr>
+
+<th>System</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>Firebase Authentication</td>
+
+<td>Online</td>
+
+</tr>
+
+<tr>
+
+<td>Firestore Database</td>
+
+<td>Connected</td>
+
+</tr>
+
+<tr>
+
+<td>Commissioner Portal</td>
+
+<td>Operational</td>
+
+</tr>
+
+<tr>
+
+<td>Public Website</td>
+
+<td>Online</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</main>
+
+<footer>
+
+<div class="container">
+
+<hr>
+
+<p>
+
+Office of the Commissioner
+
+<br>
+
+Israeli Fantasy Football League
+
+</p>
+
+</div>
+
+</footer>
+
+<script type="module">
+
+import { auth, db } from "../js/firebase.js";
+
+import {
+
+onAuthStateChanged,
+
+signOut
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+import {
+
+collection,
+
+getDocs,
+
+query,
+
+where
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+const logout=document.getElementById("logoutButton");
+
+logout.onclick=async()=>{
+
+await signOut(auth);
+
+window.location.href="../login.html";
+
+};
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+window.location.href="../login.html";
+
+return;
+
+}
+
+document.getElementById("commissionerEmail").textContent=user.email;
+
+document.getElementById("commissionerName").textContent=user.email.split("@")[0];
+
+try{
+
+const trades=await getDocs(
+
+query(
+
+collection(db,"trades"),
+
+where("status","==","Pending")
+
+)
+
+);
+
+document.getElementById("tradeCount").textContent=trades.size;
+
+}catch(e){
+
+console.log(e);
+
+}
+
+try{
+
+const appeals=await getDocs(collection(db,"appeals"));
+
+document.getElementById("appealCount").textContent=appeals.size;
+
+}catch(e){
+
+console.log(e);
+
+}
+
+try{
+
+const managers=await getDocs(collection(db,"managers"));
+
+document.getElementById("managerCount").textContent=managers.size;
+
+}catch(e){
+
+console.log(e);
+
+}
+
+try{
+
+const notices=await getDocs(collection(db,"notices"));
+
+document.getElementById("noticeCount").textContent=notices.size;
+
+}catch(e){
+
+console.log(e);
+
+}
+
+try{
+
+const memos=await getDocs(collection(db,"memorandums"));
+
+document.getElementById("memoCount").textContent=memos.size;
+
+}catch(e){
+
+console.log(e);
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>
