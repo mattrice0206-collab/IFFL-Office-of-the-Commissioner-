@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Commissioner Portal Login</title>
+<title>Commissioner Portal | Office of the Commissioner</title>
 
 <link rel="stylesheet" href="css/style.css">
 
@@ -14,19 +14,31 @@
 
 <body>
 
+<header class="top-header">
+
+<div class="container">
+
+<h1>Office of the Commissioner</h1>
+
+<h2>Israeli Fantasy Football League</h2>
+
+</div>
+
+</header>
+
 <section class="hero">
 
 <div class="container">
 
-<img src="images/commissioner-seal.png" class="seal">
+<img src="images/commissioner-seal.png" class="seal" alt="Commissioner Seal">
 
-<p class="subtitle">Restricted Access</p>
+<p class="subtitle">Official Administrative Portal</p>
 
 <h1>Commissioner Portal</h1>
 
 <p>
 
-Authorized personnel only.
+Restricted Access • Authorized League Personnel Only
 
 </p>
 
@@ -38,11 +50,34 @@ Authorized personnel only.
 
 <div class="container">
 
-<div class="office-mission" style="max-width:500px;margin:auto;">
+<div class="office-mission" style="max-width:520px;margin:60px auto;">
+
+<div style="text-align:center;">
 
 <h2>Sign In</h2>
 
+<p>
+
+Use your Commissioner account to access League Administration.
+
+</p>
+
+</div>
+
 <form id="loginForm">
+
+<label>Email Address</label>
+
+<br><br>
+
+<input
+type="email"
+id="email"
+placeholder="commissioner@email.com"
+required
+style="width:100%;padding:14px;font-size:16px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box;">
+
+<br><br>
 
 <label>Password</label>
 
@@ -51,17 +86,30 @@ Authorized personnel only.
 <input
 type="password"
 id="password"
-placeholder="Enter Commissioner Password"
-style="width:100%;padding:14px;font-size:16px;">
+placeholder="Enter Password"
+required
+style="width:100%;padding:14px;font-size:16px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box;">
 
 <br><br>
+
+<label style="display:flex;align-items:center;gap:10px;">
+
+<input
+type="checkbox"
+id="remember">
+
+Remember Me
+
+</label>
+
+<br>
 
 <button
 type="submit"
 class="button"
-style="width:100%;">
+style="width:100%;padding:14px;font-size:16px;">
 
-Access Portal
+Sign In
 
 </button>
 
@@ -69,11 +117,27 @@ Access Portal
 
 <p
 id="error"
-style="color:red;margin-top:20px;display:none;">
+style="display:none;color:#b00020;margin-top:20px;text-align:center;font-weight:bold;">
 
-Incorrect password.
+Invalid email or password.
 
 </p>
+
+<hr style="margin:40px 0;">
+
+<div style="text-align:center;font-size:14px;color:#666;">
+
+Office of the Commissioner
+
+<br>
+
+Israeli Fantasy Football League
+
+<br><br>
+
+Version 1.0
+
+</div>
 
 </div>
 
@@ -81,27 +145,85 @@ Incorrect password.
 
 </main>
 
+<footer>
+
+<div class="container">
+
+<hr>
+
+<p>
+
+Office of the Commissioner
+
+<br>
+
+Israeli Fantasy Football League
+
+</p>
+
+</div>
+
+</footer>
+
 <script type="module">
 
 import { auth } from "./js/firebase.js";
 
 import {
 
-signInWithEmailAndPassword
+signInWithEmailAndPassword,
 
-} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+setPersistence,
 
-document
-.getElementById("loginForm")
-.addEventListener("submit", async function(e){
+browserLocalPersistence,
+
+browserSessionPersistence,
+
+onAuthStateChanged
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+window.location.href="commissioner/index.html";
+
+}
+
+});
+
+const form=document.getElementById("loginForm");
+
+const error=document.getElementById("error");
+
+form.addEventListener("submit",async(e)=>{
 
 e.preventDefault();
 
-const email=prompt("Commissioner Email:");
+error.style.display="none";
+
+const email=document.getElementById("email").value.trim();
 
 const password=document.getElementById("password").value;
 
+const remember=document.getElementById("remember").checked;
+
 try{
+
+await setPersistence(
+
+auth,
+
+remember
+
+? browserLocalPersistence
+
+: browserSessionPersistence
+
+);
 
 await signInWithEmailAndPassword(
 
@@ -119,9 +241,9 @@ window.location.href="commissioner/index.html";
 
 catch(err){
 
-document.getElementById("error").innerHTML=err.message;
+error.textContent=err.message;
 
-document.getElementById("error").style.display="block";
+error.style.display="block";
 
 }
 
