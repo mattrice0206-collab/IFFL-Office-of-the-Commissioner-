@@ -81,21 +81,45 @@ Incorrect password.
 
 </main>
 
-<script>
+<script type="module">
 
-const PASSWORD="IFFL2026";
+import { auth } from "./js/firebase.js";
 
-document.getElementById("loginForm").addEventListener("submit",function(e){
+import {
+
+signInWithEmailAndPassword
+
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+document
+.getElementById("loginForm")
+.addEventListener("submit", async function(e){
 
 e.preventDefault();
 
-const pass=document.getElementById("password").value;
+const email=prompt("Commissioner Email:");
 
-if(pass===PASSWORD){
+const password=document.getElementById("password").value;
+
+try{
+
+await signInWithEmailAndPassword(
+
+auth,
+
+email,
+
+password
+
+);
 
 window.location.href="commissioner/index.html";
 
-}else{
+}
+
+catch(err){
+
+document.getElementById("error").innerHTML=err.message;
 
 document.getElementById("error").style.display="block";
 
